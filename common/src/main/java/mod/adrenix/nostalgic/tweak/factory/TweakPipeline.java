@@ -103,6 +103,10 @@ abstract class TweakPipeline
      */
     public static <T> T get(Tweak<T> tweak)
     {
+        // Only enable tweaks in the dimensions listed in config/nostalgic_tweaks_dimensions.txt
+        if (!tweak.isIgnored() && NostalgicTweaks.isClient() && !mod.adrenix.nostalgic.util.client.DimensionGate.isAllowed())
+            return tweak.getDisabled();
+
         return isTweakOn(tweak) ? getValue(tweak) : tweak.getDisabled();
     }
 }
